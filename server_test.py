@@ -46,6 +46,22 @@ class FlaskPersonTests(unittest.TestCase):
 		self.assertEqual(result.status_code, 200) 
 		data =  json.loads(result.data)	
 		self.assertTrue(len(data)>= 3)		
-		
-
-	
+	def test_e_add_person(self):
+		id = random.randint(20,1000)		
+		result = self.app.post('/add/person',json = {"Age": 55, 
+				"Dateof3rdGradeGraduation": "02/22/20", 
+				"First": "First 1", 
+				"GithubAcct": "abcd", 
+				"ID": id, 
+				"Last": "Robiner1"}) 				
+		self.assertEqual(result.status_code, 200) 		
+		 
+	def test_f_add_person_existing_id(self):		
+		result = self.app.post('/add/person',json = {"Age": 55, 
+				"Dateof3rdGradeGraduation": "02/22/20", 
+				"First": "First 1", 
+				"GithubAcct": "abcd", 
+				"ID": 15, 
+				"Last": "Robiner1"})
+			
+		self.assertEqual(result.status_code, 400) 		
