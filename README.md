@@ -22,6 +22,7 @@ Application Features:
 Plotting charts/dashboards for these aggregations and summaries.
 
 - What you have covered or not covered.
+
 Covered
 1) Used a sqlalchemy engine to persist the data in a sqllite database.
 2) Parsed the csv file to populate the database and return session.
