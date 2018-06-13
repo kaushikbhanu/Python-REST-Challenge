@@ -2,6 +2,8 @@ from server import app
 import unittest 
 import json
 import random
+from people import *
+
 class FlaskPersonTests(unittest.TestCase): 
 	@classmethod
 	def setUpClass(cls):
@@ -13,10 +15,14 @@ class FlaskPersonTests(unittest.TestCase):
 
 	def setUp(self):
 		# creates a test client
-		self.app = app.test_client()
-		self.app.debug =FlaskPersonTests
+		session = initializeDb(fileName = "people.csv",forceNewDbCreation=False) 
+		app.json_encoder = PersonEncoder
+		app.config["SQLALCHEMY_DATABASE_SESSION"] = session		
+		self.app = app.test_client()		
+		self.app.debug = FlaskPersonTests
 		# propagate the exceptions to the test client
 		self.app.testing = False 
+		
 
 	def tearDown(self):
 		pass 

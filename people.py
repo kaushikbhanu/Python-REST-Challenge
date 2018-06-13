@@ -60,4 +60,3 @@ def initializeDb(fileName="persons.csv", forceNewDbCreation=False):
 				session.add(per)
 			session.commit()
 	return session
-initializeDb()

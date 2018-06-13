@@ -17,7 +17,7 @@ def getPeople():
     '''
     Return a standard JSON block of people in any order of format. Must be valid JSON
     '''    
-    return jsonify(session.query(Person).all())
+    return jsonify(app.config["SQLALCHEMY_DATABASE_SESSION"].query(Person).all())
 
 
 @app.route('/people/age',methods=['GET'])
@@ -25,7 +25,7 @@ def sortPeopleByAge():
     '''
     Returns Json block containing a list of people sorted by age youngest to oldest
     '''    
-    return jsonify(session.query(Person).order_by("_Age").all())
+    return jsonify(app.config["SQLALCHEMY_DATABASE_SESSION"].query(Person).order_by("_Age").all())
     
 @app.route('/ids/lastname/<lastname>',methods=['GET'])
 def getIdsByLastName(lastname):
@@ -33,7 +33,7 @@ def getIdsByLastName(lastname):
     Returns Json block of ids found for the given last name
     Using path params
     '''    
-    return jsonify(session.query(Person).filter_by(_Last=lastname).with_entities(Person._ID).all())
+    return jsonify(app.config["SQLALCHEMY_DATABASE_SESSION"].query(Person).filter_by(_Last=lastname).with_entities(Person._ID).all())
 
 
 # TODO Create an endpoint POST that accepts a 'person' and appends it to our people. Returns the newley update JSON block of all people.
@@ -77,15 +77,13 @@ def addPerson():
         pass
     try:
         per = Person(_ID = id,_First=first,_Last = last,_Age = age,_GithubAcct =githubacct,_Dateof3rdGradeGraduation=dateof3rdGraduation)
-        session.add(per)
-        session.commit()
+        app.config["SQLALCHEMY_DATABASE_SESSION"].add(per)
+        app.config["SQLALCHEMY_DATABASE_SESSION"].commit()
     except:
         return Response("Error in adding the record", 400)
-    return jsonify(session.query(Person).all())
+    return jsonify(app.config["SQLALCHEMY_DATABASE_SESSION"].query(Person).all())
 
 # Optional Challenge: Persist the data somehow
-
-
 if __name__ == '__main__':
     
     parser = argparse.ArgumentParser()
@@ -99,8 +97,10 @@ if __name__ == '__main__':
     # TODO: Initialize any pre-application start code here if needed
     # TODO: Read in people from people.csv into an appropraite data structure so that the endpoints can return data based
     #       on the data in the csv.    
-    session = initializeDb(fileName = args.file,forceNewDbCreation=False)    
+    session = initializeDb(fileName = args.file,forceNewDbCreation=False) 
+    app.config["SQLALCHEMY_DATABASE_SESSION"]  = session
     app.json_encoder = PersonEncoder
     app.debug=args.debug
+    app.app_context
     app.run(port=args.port)
 
