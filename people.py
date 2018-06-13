@@ -15,7 +15,7 @@ class Person(Base):
 	_Age = Column(Integer)
 	_GithubAcct = Column(String(250))
 	_Dateof3rdGradeGraduation = Column(Date)
-class PersonEncoder(JSONEncoder):
+class PersonEncoder(JSONEncoder):	
 	def default(self, o):
 		if isinstance(o, Person): 
 			return { "ID" : o._ID,
@@ -26,7 +26,7 @@ class PersonEncoder(JSONEncoder):
 				 "Date of 3rd Grade Graduation" : str(o._Dateof3rdGradeGraduation) }
 		return JSONEncoder.default(self, o)
 
-def initializeDb():
+def initializeDb(fileName="persons.csv", forceNewDbCreation=False):
 	databaseExists =  False
 	if os.path.isfile("persons.db"):
 		databaseExists = True
@@ -34,8 +34,8 @@ def initializeDb():
 	Base.metadata.create_all(engine)
 	DBSession = sessionmaker(bind=engine)
 	session = DBSession()
-	if not databaseExists:		
-		with open("people.csv") as f:        
+	if not databaseExists or forceNewDbCreation:		
+		with open(fileName) as f:        
 			next(f)
 			for line in f:			
 				personvalues = line.split(",")        

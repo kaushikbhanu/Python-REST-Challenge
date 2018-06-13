@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, Response
 import argparse
 import sys
 from people import *
+
 #Web app
 app = Flask(__name__)
 @app.route('/ping',methods=['GET'])
@@ -97,8 +98,8 @@ if __name__ == '__main__':
 
     # TODO: Initialize any pre-application start code here if needed
     # TODO: Read in people from people.csv into an appropraite data structure so that the endpoints can return data based
-    #       on the data in the csv.
-    session = initializeDb()    
+    #       on the data in the csv.    
+    session = initializeDb(fileName = args.file,forceNewDbCreation=False)    
     app.json_encoder = PersonEncoder
     app.debug=args.debug
     app.run(port=args.port)
