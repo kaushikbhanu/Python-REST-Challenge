@@ -25,7 +25,7 @@ def initializeDb():
 	DBSession = sessionmaker(bind=engine)
 	session = DBSession()
 	if not databaseExists:		
-		with open("persons.csv") as f:        
+		with open("people.csv") as f:        
 			next(f)
 			for line in f:			
 				personvalues = line.split(",")        
@@ -48,3 +48,4 @@ def initializeDb():
 				session.add(per)
 			session.commit()
 	return session
+initializeDb()
