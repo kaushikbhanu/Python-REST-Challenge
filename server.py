@@ -21,22 +21,21 @@ def getPeople():
     # TODO
     return jsonify(session.query(Person).all())
 
+
 @app.route('/people/age',methods=['GET'])
 def sortPeopleByAge():
     '''
     Returns Json block containing a list of people sorted by age youngest to oldest
-    '''
-    # TODO
-    pass
-
+    '''    
+    return jsonify(session.query(Person).order_by("_Age desc").all())
+    
 @app.route('/ids/lastname/<lastname>',methods=['GET'])
 def getIdsByLastName(lastname):
     '''
     Returns Json block of ids found for the given last name
     Using path params
-    '''
-    # TODO
-    pass
+    '''    
+    return jsonify(session.query(Person).filter_by(_Last=lastname).all())
 
 
 # TODO Create an endpoint POST that accepts a 'person' and appends it to our people. Returns the newley update JSON block of all people.

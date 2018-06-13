@@ -28,3 +28,24 @@ class FlaskPersonTests(unittest.TestCase):
 		self.assertEqual(b'pong',result.data)
 		# assert the status code of the response
 		self.assertEqual(result.status_code, 200) 
+
+	
+	def test_b_get_people(self):
+		result = self.app.get('/people') 				
+		self.assertEqual(result.status_code, 200) 
+		data =  json.loads(result.data)		
+		self.assertTrue(len(data)>= 7)	
+	def test_c_get_people_age(self):
+		result = self.app.get('/people/age') 				
+		self.assertEqual(result.status_code, 200) 
+		data =  json.loads(result.data)		
+		self.assertTrue(len(data)>= 7)	
+
+	def test_d_get_people_lastname(self):
+		result = self.app.get('/ids/lastname/Robiner') 				
+		self.assertEqual(result.status_code, 200) 
+		data =  json.loads(result.data)	
+		self.assertTrue(len(data)>= 3)		
+		
+
+	
