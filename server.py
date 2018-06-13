@@ -1,10 +1,11 @@
 from flask import Flask, request, jsonify, Response
 import argparse
 import sys
-
+from people import *
 #Web app
 app = Flask(__name__)
-
+session = initializeDb()    
+app.json_encoder = PersonEncoder
 @app.route('/ping',methods=['GET'])
 def pingServer():
     '''
@@ -18,7 +19,7 @@ def getPeople():
     Return a standard JSON block of people in any order of format. Must be valid JSON
     '''
     # TODO
-    pass
+    return jsonify(session.query(Person).all())
 
 @app.route('/people/age',methods=['GET'])
 def sortPeopleByAge():

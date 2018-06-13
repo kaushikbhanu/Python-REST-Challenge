@@ -15,6 +15,16 @@ class Person(Base):
 	_Age = Column(Integer)
 	_GithubAcct = Column(String(250))
 	_Dateof3rdGradeGraduation = Column(Date)
+class PersonEncoder(JSONEncoder):
+	def default(self, o):
+		if isinstance(o, Person): 
+			return { "ID" : o._ID,
+				 "First" : o._First, 
+				 "Last" : o._Last, 
+				 "Age" : o._Age, 
+				 "GithubAcct" : o._GithubAcct, 
+				 "Date of 3rd Grade Graduation" : str(o._Dateof3rdGradeGraduation) }
+		return JSONEncoder.default(self, o)
 
 def initializeDb():
 	databaseExists =  False
