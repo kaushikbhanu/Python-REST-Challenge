@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 import argparse
 import sys
 
@@ -9,9 +9,8 @@ app = Flask(__name__)
 def pingServer():
     '''
     Ping request to make sure server is alive, return 'pong'
-    '''
-    # TODO
-    pass
+    '''        
+    return Response("pong",200)
 
 @app.route('/people',methods=['GET'])
 def getPeople():
@@ -61,5 +60,5 @@ if __name__ == '__main__':
     #       on the data in the csv.
 
     app.debug=args.debug
-    app.run(host='0.0.0.0')
+    app.run()
 
