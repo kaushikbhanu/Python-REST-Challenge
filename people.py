@@ -27,6 +27,8 @@ class PersonEncoder(JSONEncoder):
 		return JSONEncoder.default(self, o)
 
 def initializeDb(fileName="persons.csv", forceNewDbCreation=False):
+	if forceNewDbCreation:
+		os.remove("persons.db")
 	databaseExists =  False
 	if os.path.isfile("persons.db"):
 		databaseExists = True
