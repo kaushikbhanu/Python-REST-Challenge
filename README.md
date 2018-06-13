@@ -22,12 +22,17 @@ Application Features:
 Plotting charts/dashboards for these aggregations and summaries.
 
 - What you have covered or not covered.
+Covered
 1) Used a sqlalchemy engine to persist the data in a sqllite database.
 2) Parsed the csv file to populate the database and return session.
 3) Implemented Person class to create person instances
 4) Implemented a JSON encoder to encode the person objects
 5) Implemented the basic functionality as required. 
 6) Implemented basic unit tests for success cases (could be be more elaborate and need more work)
+
+Not Covered 
+1) Proper request error handling with Http codes
+2) Boundary conditions handling
 
 
 ## General instructions and tasks
